@@ -8,7 +8,7 @@ const courseSchema = new Schema(
     description: String,
     classes: Array,
     flag: Array,
-    userId: mongoose.ObjectId,
+    users: [],
   },
   {
     timestamps: true,

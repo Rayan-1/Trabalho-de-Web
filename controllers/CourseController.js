@@ -74,9 +74,43 @@ const getCourseById = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, category, description, classes, flag, users } = req.body;
+
+    const course = await Course.findById(mongoose.Types.ObjectId(id));
+
+    if (!course) {
+      res.status(404).json({ errors: ["Curso não encontrado."] });
+
+      return;
+    }
+
+    if (title) course.title = title;
+
+    if (category) course.category = category;
+
+    if (description) course.description = description;
+
+    if (classes) course.classes = classes;
+
+    if (flag) course.flag = flag;
+
+    if (users) course.users = users;
+
+    await course.save();
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   insertCourse,
   deleteCourse,
   getCourses,
   getCourseById,
+  update,
 };

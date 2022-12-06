@@ -13,6 +13,23 @@ const courseInsertValidation = () => {
   ];
 };
 
+const courseUpdateValidation = () => {
+  return [
+    body("title")
+      .isLength({ min: 3 })
+      .withMessage("O nome precisa de pelo menos 3 caracteres"),
+    body("category")
+      .optional()
+      .isLength({ min: 3 })
+      .withMessage("A categoria precisa de pelo menos 3 caracteres"),
+    body("description")
+      .optional()
+      .isLength({ min: 3 })
+      .withMessage("A descrição precisa de pelo menos 3 caracteres"),
+  ];
+};
+
 module.exports = {
   courseInsertValidation,
+  courseUpdateValidation,
 };
