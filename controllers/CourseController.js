@@ -2,24 +2,28 @@ const Course = require("../models/Course");
 const mongoose = require("mongoose");
 
 const insertCourse = async (req, res) => {
-  const { title, category, description, classes } = req.body;
+  try {
+    const { title, category, description, classLink } = req.body;
 
-  const newCourse = await Course.create({
-    title,
-    category,
-    description,
-    classes,
-  });
-
-  if (!newCourse) {
-    res.status(422).json({
-      errors: ["Houve um problema, por favor tente novamente mais tarde."],
+    const newCourse = await Course.create({
+      title,
+      category,
+      description,
+      classLink,
     });
 
-    return;
-  }
+    if (!newCourse) {
+      res.status(422).json({
+        errors: ["Houve um problema, por favor tente novamente mais tarde."],
+      });
 
-  res.status(201).json(newCourse);
+      return;
+    }
+
+    res.status(201).json(newCourse);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteCourse = async (req, res) => {
@@ -77,7 +81,7 @@ const getCourseById = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, category, description, classes, flag, users } = req.body;
+    const { title, category, description, classLink } = req.body;
 
     const course = await Course.findById(mongoose.Types.ObjectId(id));
 
@@ -93,11 +97,7 @@ const update = async (req, res) => {
 
     if (description) course.description = description;
 
-    if (classes) course.classes = classes;
-
-    if (flag) course.flag = flag;
-
-    if (users) course.users = users;
+    if (classLink) course.classLink = classLink;
 
     await course.save();
 
