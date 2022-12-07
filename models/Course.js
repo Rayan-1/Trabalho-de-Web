@@ -6,9 +6,7 @@ const courseSchema = new Schema(
     title: String,
     category: String,
     description: String,
-    classes: Array,
-    flag: Array,
-    users: [],
+    classLink: String,
   },
   {
     timestamps: true,
